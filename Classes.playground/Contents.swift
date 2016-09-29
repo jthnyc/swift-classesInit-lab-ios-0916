@@ -161,16 +161,16 @@ class BankAccount {
     let owner: Person
     var transactions = [Transaction]()
     var balance: Double {
+        var balanceTotal = 0.0
+
         for amount in transactions {
-            var balance = 0.0
             if amount.type == "in" {
-                balance += amount.amount
+                balanceTotal += amount.amount
             } else {
-                balance -= amount.amount
+                balanceTotal -= amount.amount
             }
-            
         }
-        return self.balance
+        return balanceTotal
     }
     
     init (owner: Person) {
@@ -178,7 +178,7 @@ class BankAccount {
     }
 
     func deposit (_ depositAmount: Double) {
-        let deposit = Transaction(type: "In", amount: depositAmount)
+        let deposit = Transaction(type: "in", amount: depositAmount)
         transactions.append(deposit)
     }
     
@@ -246,9 +246,11 @@ assert(personBankAccount.transactions.count == 4, "\(personBankAccount.transacti
 
 
 
+print(personBankAccount.balance)
 
 // Test
 assert(personBankAccount.balance == 74.5, personBankAccount.balance.toMoney)
+
 
 /*: finale
  
